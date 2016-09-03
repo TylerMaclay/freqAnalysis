@@ -3,15 +3,16 @@
 #include <vector>
 #include <map>
 #include "fileReader.h"
+#include "wordCounter.h"
 
-std::map<std::string, uint32_t> wordCount(const std::vector<std::string> words);
 
 int main() {
-	const std::string version = "V0.2";
+	const std::string version = "V0.21";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
-	fileReader file("./test/testfile.txt");
+	fileReader file("./test/README");
 	std::vector<std::string> testWords = file.getWords();
-	std::map<std::string, uint32_t> testMap = wordCount(testWords);
+	wordCounter wordCountTest(testWords);
+	std::map<std::string, uint32_t> testMap = wordCountTest.getCounts();
 	for(auto i : testMap)
 		std::cout<<i.first<<" "<<i.second<<std::endl;
 
@@ -19,16 +20,4 @@ int main() {
 
 }
 
-std::map<std::string, uint32_t> wordCount(const std::vector<std::string> words){
-	std::map<std::string, uint32_t> wordMap;
-	for(auto i = words.begin(); i != words.end(); i++){
-		auto search = wordMap.find(*i);
-		if(search != wordMap.end())
-			search->second++;
-		else {
-			wordMap.insert(std::make_pair(*i,1));
-		}
-	}
 
-	return wordMap;
-}
