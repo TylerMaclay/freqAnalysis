@@ -4,9 +4,9 @@ SRCDIR = ./src
 INCDIR = ./inc
 
 freqAnalysis : main.o fileReader.o
-	$(CC) $(CFLAGS) -o ./bin/freqAnalysis main.o
+	$(CC) $(CFLAGS) -o ./bin/freqAnalysis main.o fileReader.o
 
-fileReader.o : $(INCDIR)/fileReader.h
+fileReader.o : $(INCDIR)/fileReader.h $(SRCDIR)/fileReader.cpp
 	$(CC) $(CFLAGS) -c $(SRCDIR)/fileReader.cpp
 
 main.o : $(SRCDIR)/main.cpp
