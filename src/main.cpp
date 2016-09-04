@@ -5,9 +5,11 @@
 #include "fileReader.h"
 #include "wordCounter.h"
 #include "output.h"
+#include "cmdargs.h"
 
-int main() {
-	const std::string version = "V0.21";
+int main(int argc, char** argv) {
+	cmdargs arguments(argc,argv);
+	const std::string version = "V0.3";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
 	fileReader file("./test/README");
 	output* outputter;
