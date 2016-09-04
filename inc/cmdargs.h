@@ -11,7 +11,7 @@ class cmdargs {
 
 	public:
 		cmdargs(const int argc,  char** argv);
-		std::string nextArg() ;
+		std::string nextArg();
 };
 
 #endif

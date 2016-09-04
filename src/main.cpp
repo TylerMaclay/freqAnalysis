@@ -9,8 +9,29 @@
 
 int main(int argc, char** argv) {
 	cmdargs arguments(argc,argv);
-	const std::string version = "V0.3";
+	std::string resumeFileName;
+	std::string descriptionName;
+	const std::string version = "V0.4";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
+	std::cout<<"Populating internal variables based on arguments..."
+		<< std::endl;
+	std::string currentArg="";
+	do {
+		currentArg = arguments.nextArg();
+		if(currentArg.empty())
+			break;
+		if((currentArg) == "-r"){
+			resumeFileName = arguments.nextArg();
+			std::cout<<"Setting resumeFileName to: "
+			<< resumeFileName << std::endl;
+		}
+		if((currentArg) == "-d"){
+			descriptionName = arguments.nextArg();
+			std::cout<<"Setting descriptionName to: "
+			<< descriptionName << std::endl;
+		}
+	} while(!currentArg.empty());
+
 	fileReader file("./test/README");
 	output* outputter;
 	outputter = new CSVOutput("./test/output.txt");

@@ -10,7 +10,13 @@ cmdargs::cmdargs(const int argc,  char** argv) {
 }
 
 std::string cmdargs::nextArg() {
-	std::string returnValue = *it;
-	it++;
+	std::string returnValue;
+	if(it != args.end()){
+		returnValue = *it;
+		it++;
+	}
+	else {
+		returnValue = "";
+	}
 	return returnValue;
 }
