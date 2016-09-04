@@ -3,25 +3,26 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 
 class output {
 	public:
 		std::ofstream outFile;
 		output(const std::string&);
 		~output();
-		virtual void writeLine(const std::string&, const std::string&)=0 ;
+		virtual void writeLine(const std::vector<std::string>&)=0 ;
 };
 
 class CSVOutput : public output {
 	public:
 		CSVOutput(const std::string&);
-		void writeLine(const std::string&, const std::string&) ;
+		void writeLine(const std::vector<std::string>&) ;
 };
 
 class HTMLOutput : public output {
 	public:
 		HTMLOutput(const std::string&);
-		void writeLine(const std::string&, const std::string&) ;
+		void writeLine(const std::vector<std::string>&) ;
 };
 
 #endif

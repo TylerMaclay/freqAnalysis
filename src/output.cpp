@@ -8,10 +8,17 @@ output::~output() { outFile.close();}
 CSVOutput::CSVOutput(const std::string& oFile) : output(oFile) {}
 HTMLOutput::HTMLOutput(const std::string& oFile) : output(oFile) {}
 
-void CSVOutput::writeLine(const std::string& data1, const std::string& data2) {
-	outFile << data1 << "," << data2 << "\n";
+void CSVOutput::writeLine(const std::vector<std::string>& data) {
+	for(auto i : data) {
+		outFile << i << ",";
+	}
+	outFile << "\n";
 }
 
-void HTMLOutput::writeLine(const std::string& data1, const std::string& data2){
-	outFile << "<TR><TD>" << data1 << "</TD><TD>" << data2 << "</TD></TR>";
+void HTMLOutput::writeLine(const std::vector<std::string>& data){
+	outFile << "<TR>";
+	for(auto i : data) {
+		outFile << "<TD>" << i << "</TD>";
+	}
+	outFile << "</TR>\n";
 }

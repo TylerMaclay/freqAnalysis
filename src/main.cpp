@@ -15,8 +15,12 @@ int main() {
 	std::vector<std::string> testWords = file.getWords();
 	wordCounter wordCountTest(testWords);
 	std::map<std::string, uint32_t> testMap = wordCountTest.getCounts();
-	for(auto i : testMap)
-		outputter->writeLine(i.first,std::to_string(i.second));
+	for(auto i : testMap){
+		std::vector<std::string> vec;
+		vec.push_back(i.first);
+		vec.push_back(std::to_string(i.second));
+		outputter->writeLine(vec);
+	}
 	return 0;
 
 }
