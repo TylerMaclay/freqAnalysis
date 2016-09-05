@@ -3,8 +3,11 @@ CFLAGS = -I inc -std=c++11 -Wall -Wextra -pedantic
 SRCDIR = ./src
 INCDIR = ./inc
 
-freqAnalysis : main.o fileReader.o wordCounter.o output.o cmdargs.o
-	$(CC) $(CFLAGS) -o ./bin/freqAnalysis main.o fileReader.o wordCounter.o output.o cmdargs.o
+freqAnalysis : main.o fileReader.o wordCounter.o output.o cmdargs.o unionMap.o
+	$(CC) $(CFLAGS) -o ./bin/freqAnalysis main.o fileReader.o wordCounter.o output.o cmdargs.o unionMap.o
+
+unionMap.o : $(INCDIR)/unionMap.h $(SRCDIR)/unionMap.cpp
+	$(CC) $(CFLAGS) -c $(SRCDIR)/unionMap.cpp
 
 cmdargs.o : $(INCDIR)/cmdargs.h $(SRCDIR)/cmdargs.cpp
 	$(CC) $(CFLAGS) -c $(SRCDIR)/cmdargs.cpp
