@@ -46,6 +46,8 @@ int main(int argc, char** argv) {
 		}
 		else if((currentArg) == "-o") {
 			outputFile = arguments.nextArg();
+			std::cout<<"Setting output file to: " 
+			<<outputFile << std::endl;
 		}
 		else {
 			std::cerr<<"Unknown Parameter: " << currentArg
