@@ -16,7 +16,7 @@ unionMap::unionMap(std::map<std::string, int> map1, std::map<std::string, int> m
 		
 		while(lexComp < 0 && i != map1.end()){
 			unionMap_m[i->first] = i->second;
-			std::cout<<"Entered1: " << i->first << " " <<i->second << std::endl;
+			//std::cout<<"Entered1: " << i->first << " " <<i->second << std::endl;
 			++i;
 			if(i != map1.end() && j != map2.end()){
 				lexComp = (i->first).compare(j->first);
@@ -27,8 +27,8 @@ unionMap::unionMap(std::map<std::string, int> map1, std::map<std::string, int> m
 
 		}
 		if(lexComp == 0) {
-			unionMap_m[i->first] = ((i->second) - (j->second));
-			std::cout<<"Entered2: " << i->first << " " << i->second - j->second <<std::endl;
+			unionMap_m[i->first] = ((i->second) + (j->second));
+			//std::cout<<"Entered2: " << i->first << " " << i->second - j->second <<std::endl;
 			if(i != map1.end() && j != map2.end()){
 				i++;
 				j++;
@@ -51,7 +51,7 @@ unionMap::unionMap(std::map<std::string, int> map1, std::map<std::string, int> m
 		}
 		while(lexComp > 0 && j != map2.end()){
 			unionMap_m[j->first] = j->second;
-			std::cout<<"Entered3: " << j->first << " " << j->second << std::endl;
+			//std::cout<<"Entered3: " << j->first << " " << j->second << std::endl;
 			j++;
 			if(j != map2.end() && i != map1.end()){
 				lexComp = (i->first).compare(j->first);
