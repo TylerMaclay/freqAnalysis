@@ -12,6 +12,7 @@
 #include "wordCounter.h"
 #include "output.h"
 #include "cmdargs.h"
+#include "unionMap.h"
 
 output* setUpOutput(const std::string& outputFileName);
 
@@ -105,14 +106,19 @@ int main(int argc, char** argv) {
 		vec.push_back(i.first);
 		vec.push_back(std::to_string(i.second));
 		outputter->writeLine(vec);
-	//	std::cout<<"Entering: " << i.first << " " << i.second << std::endl;
+		std::cout<<"Entering: " << i.first << " " << i.second << std::endl;
 	}
 	for( auto j : testMap2){
 		std::vector<std::string> vec;
 		vec.push_back(j.first);
 		vec.push_back(std::to_string(j.second));
 		outputter->writeLine(vec);
-	//	std::cout<<"Entering: " << j.first << " " << j.second << std::endl;
+		std::cout<<"Entering: " << j.first << " " << j.second << std::endl;
+	}
+	unionMap uMap(testMap1, testMap2);
+	std::map<std::string, uint32_t> testUMap = uMap.getUnionMap();
+	for(auto k : testUMap){
+		std::cout<<"Union Map Element: " << k.first << " " << k.second << std::endl;
 	}
 	delete outputter;
 	return 0;
