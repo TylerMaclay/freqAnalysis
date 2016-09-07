@@ -15,6 +15,7 @@
 #include "unionMap.h"
 
 output* setUpOutput(const std::string& outputFileName);
+void invertValues(std::map<std::string, int>& rMap);
 
 int main(int argc, char** argv) {
 	cmdargs arguments(argc,argv);
@@ -101,6 +102,9 @@ int main(int argc, char** argv) {
 	std::cout<<"Word Counter successfully set up for description..."<<std::endl;
 	std::map<std::string, int> testMap1 = wordCountTest1.getCounts();
 	std::map<std::string, int> testMap2 = wordCountTest2.getCounts();
+	std::cout<<"Inverting resume values...";
+	invertValues(testMap1);
+	std::cout<<"Done!"<<std::endl;
 	for(auto i : testMap1){
 		std::vector<std::string> vec;
 		vec.push_back(i.first);
@@ -138,5 +142,11 @@ output* setUpOutput(const std::string& outputFileName) {
 		std::cout<<"Unknown file-type extension, defaulting to CSV-style file..."
 		<< std::endl;
 		return (new CSVOutput(outputFileName));
+	}
+}
+
+void invertValues(std::map<std::string, int>& uMap){
+	for(auto it = uMap.begin(); it != uMap.end(); ++it){
+		it->second = -1*(it->second);
 	}
 }
