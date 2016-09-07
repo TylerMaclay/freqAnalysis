@@ -14,6 +14,6 @@ wordCounter::wordCounter(const std::vector<std::string>& words){
 	}
 }
 
-std::map<std::string, uint32_t> wordCounter::getCounts() const {
+std::map<std::string, int> wordCounter::getCounts() const {
 	return wordMap;
 }

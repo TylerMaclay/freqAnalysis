@@ -4,9 +4,9 @@
 
 class unionMap{
 	private:
-		std::map<std::string, uint32_t> unionMap_m;
+		std::map<std::string, int> unionMap_m;
 
 	public:
-		unionMap(std::map<std::string, uint32_t>, std::map<std::string, uint32_t>);
-		std::map<std::string, uint32_t> getUnionMap() const;
+		unionMap(std::map<std::string, int>, std::map<std::string, int>);
+		std::map<std::string, int> getUnionMap() const;
 };

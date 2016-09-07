@@ -99,8 +99,8 @@ int main(int argc, char** argv) {
 	std::cout<<"Word Counter successfully set up for resume..."<<std::endl;
 	wordCounter wordCountTest2(testWords2);
 	std::cout<<"Word Counter successfully set up for description..."<<std::endl;
-	std::map<std::string, uint32_t> testMap1 = wordCountTest1.getCounts();
-	std::map<std::string, uint32_t> testMap2 = wordCountTest2.getCounts();
+	std::map<std::string, int> testMap1 = wordCountTest1.getCounts();
+	std::map<std::string, int> testMap2 = wordCountTest2.getCounts();
 	for(auto i : testMap1){
 		std::vector<std::string> vec;
 		vec.push_back(i.first);
@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
 		std::cout<<"Entering: " << j.first << " " << j.second << std::endl;
 	}
 	unionMap uMap(testMap1, testMap2);
-	std::map<std::string, uint32_t> testUMap = uMap.getUnionMap();
+	std::map<std::string, int> testUMap = uMap.getUnionMap();
 	for(auto k : testUMap){
 		std::cout<<"Union Map Element: " << k.first << " " << k.second << std::endl;
 	}

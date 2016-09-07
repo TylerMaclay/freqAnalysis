@@ -7,10 +7,10 @@
 
 class wordCounter {
 	private:
-		std::map<std::string, uint32_t> wordMap;
+		std::map<std::string, int> wordMap;
 	public:
 		wordCounter(const std::vector<std::string>& words);
-		std::map<std::string, uint32_t> getCounts() const;
+		std::map<std::string, int> getCounts() const;
 };
 
 #endif
