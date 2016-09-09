@@ -13,17 +13,20 @@
 #include "output.h"
 #include "cmdargs.h"
 #include "unionMap.h"
+#include "learningMode.h"
 
 output* setUpOutput(const std::string& outputFileName);
 void invertValues(std::map<std::string, int>& rMap);
+enum class mode { LM, MM, NS }; //LM = learningMode, MM = mainMode, NS = No Mode Set
 
 int main(int argc, char** argv) {
+	mode m = mode::NS;
 	cmdargs arguments(argc,argv);
 	std::string resumeFileName="";
 	std::string descriptionName="";
 	std::string outputFile="";
 	std::string settingsFile = "./settings.ini";
-	const std::string version = "V0.5";
+	const std::string version = "V0.6";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
 	std::cout<<"Populating internal variables based on arguments..."
 		<< std::endl;
@@ -50,6 +53,14 @@ int main(int argc, char** argv) {
 			outputFile = arguments.nextArg();
 			std::cout<<"Setting output file to: " 
 			<<outputFile << std::endl;
+		}
+		else if((currentArg) == "-l") {
+			m = mode::LM;
+			std::cout<<"Entering learning mode." <<std::endl;
+		}
+		else if((currentArg) == "-m"){
+			m = mode::MM;
+			std::cout<<"Entering main mode." <<std::endl;
 		}
 		else {
 			std::cerr<<"Unknown Parameter: " << currentArg
@@ -79,7 +90,27 @@ int main(int argc, char** argv) {
 			outputFile = value;
 		}
 	}
-	std::cout<<"All Settings are now set, proceeding with word extraction..."<<std::endl;
+	std::cout<<"All Settings are now set. "<<std::endl;
+	while(m == mode::NS) {
+		char choice;
+		std::cout<<"Which mode would you like to use? (l)earning mode, (m)ain mode: ";
+		std::cin>>choice;
+		switch(choice) {
+			case 'l':
+			case 'L':
+				m = mode::LM;
+				std::cout<<"Setting learning mode." <<std::endl;
+				break;
+
+			case 'm':
+			case 'M':
+				m = mode::MM;
+				std::cout<<"Setting main mode."<<std::endl;
+				break;
+			default :
+				std::cout<<"Please enter a valid choice: ";
+		}
+	}
 
 	fileReader resume(resumeFileName);
 	std::cout<<"File Reader successfully set up for resume... "
