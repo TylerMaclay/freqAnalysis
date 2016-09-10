@@ -13,6 +13,7 @@
 #include "output.h"
 #include "cmdargs.h"
 #include "unionMap.h"
+#include "learningMode.h"
 
 output* setUpOutput(const std::string& outputFileName);
 void invertValues(std::map<std::string, int>& rMap);
@@ -23,7 +24,7 @@ int main(int argc, char** argv) {
 	std::string descriptionName="";
 	std::string outputFile="";
 	std::string settingsFile = "./settings.ini";
-	const std::string version = "V0.5";
+	const std::string version = "V0.6";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
 	std::cout<<"Populating internal variables based on arguments..."
 		<< std::endl;
@@ -50,6 +51,10 @@ int main(int argc, char** argv) {
 			outputFile = arguments.nextArg();
 			std::cout<<"Setting output file to: " 
 			<<outputFile << std::endl;
+		}
+		else if((currentArg) == "l"){
+			std::cout<<"Entering learning mode...";
+			learningMode_t = true;
 		}
 		else {
 			std::cerr<<"Unknown Parameter: " << currentArg
