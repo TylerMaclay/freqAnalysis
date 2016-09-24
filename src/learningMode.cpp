@@ -4,6 +4,7 @@
 
 learningMode::learningMode(std::vector<std::string> uVec, std::map<std::string, int> cMap) :
 	uselessWord(uVec), wordCountResult(cMap) { 
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 
 	for(auto it = cMap.begin(); it != cMap.end(); ++it){
 		if(!checkAgainstList(it->first)){
@@ -19,7 +20,8 @@ bool learningMode::getResult(const std::string& question) const {
 	std::string answer;
 	std::cout<<question;
 	while(std::getline(std::cin, answer)){
-		if(std::tolower(answer[0]) != 'y' || std::tolower(answer[0] != 'n')){
+		std::tolower(answer[0]);
+		if(answer[0] != 'y' && answer[0] != 'n'){
 			std::cout<<"Please enter a valid value..."<<std::endl;
 			std::cout<<question;
 		}

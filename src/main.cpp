@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
 	std::string resumeFileName="";
 	std::string descriptionName="";
 	std::string outputFile="";
+	std::string ignoreFile="";
 	std::string settingsFile = "./settings.ini";
 	const std::string version = "V0.6";
 	std::cout<<"Frequency Analysis Program " << version << std::endl;
@@ -62,6 +63,10 @@ int main(int argc, char** argv) {
 			m = mode::MM;
 			std::cout<<"Entering main mode." <<std::endl;
 		}
+		else if((currentArg) == "-i"){
+			ignoreFile = arguments.nextArg();
+			std::cout<<"Ignore Words file is: " << ignoreFile << std::endl;
+		}
 		else {
 			std::cerr<<"Unknown Parameter: " << currentArg
 			<<"\nPlease consult usage guide.";
@@ -88,6 +93,9 @@ int main(int argc, char** argv) {
 		}
 		else if(option == "DEFAULTWRITEFILE" && outputFile.empty()) {
 			outputFile = value;
+		}
+		else if(option =="IGNOREFILE" && ignoreFile.empty()){
+			ignoreFile = value;
 		}
 	}
 	std::cout<<"All Settings are now set. "<<std::endl;
@@ -119,6 +127,9 @@ int main(int argc, char** argv) {
 	fileReader description(descriptionName); 
 	std::cout<<"File Reader successfully set up for description... "
 	<<descriptionName <<std::endl;
+	fileReader wordsToIgnore(ignoreFile);
+	std::cout<<"File Reader successfully set up for words to ignore..."
+	<<ignoreFile<<std::endl;
 
 	if(m == mode::MM){
 		std::cout<<outputFile;
@@ -159,6 +170,8 @@ int main(int argc, char** argv) {
 		delete outputter;
 	}
 	else if(m == mode::LM){
+		wordCounter descriptionWordCounter(description.getWords());
+		learningMode learn(wordsToIgnore.getWords(), descriptionWordCounter.getCounts());
 	}
 	return 0;
 
