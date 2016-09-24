@@ -172,6 +172,12 @@ int main(int argc, char** argv) {
 	else if(m == mode::LM){
 		wordCounter descriptionWordCounter(description.getWords());
 		learningMode learn(wordsToIgnore.getWords(), descriptionWordCounter.getCounts());
+		wordsToIgnore.closeFile();
+		CSVOutput out(ignoreFile);
+		std::vector<std::string> v = learn.getFullWords();
+		for(auto i : v)
+			out.writeLine(v);
+
 	}
 	return 0;
 
