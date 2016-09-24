@@ -35,3 +35,11 @@ std::vector<std::string> fileReader::getWords() {
 
 	return words;
 }
+
+void fileReader::closeFile(){
+	in.close();
+}
+
+void fileReader::openFile(){
+	in.open(fileName);
+}

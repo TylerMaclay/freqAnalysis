@@ -14,6 +14,8 @@ class fileReader {
 
 		fileReader(const std::string& ifn);
 		std::vector<std::string> getWords();
+		void closeFile();
+		void openFile();
 
 };
 
