@@ -123,60 +123,64 @@ int main(int argc, char** argv) {
 				std::cout<<"Please enter a valid choice: ";
 		}
 	}
-
+	std::cout<<"Setting up resume file...";
 	fileReader resume(resumeFileName);
-	std::cout<<"File Reader successfully set up for resume... "
-	<< resumeFileName <<std::endl;
+	std::cout<<"done. Using: "<< resumeFileName <<std::endl;
 	
+	std::cout<<"Setting up description file...";	
 	fileReader description(descriptionName); 
-	std::cout<<"File Reader successfully set up for description... "
-	<<descriptionName <<std::endl;
+	std::cout<<"done. Using: " <<descriptionName <<std::endl;
+	
+	std::cout<<"Setting up word blacklist file...";
 	fileReader wordsToIgnore(ignoreFile);
-	std::cout<<"File Reader successfully set up for words to ignore..."
-	<<ignoreFile<<std::endl;
+	std::cout<<"done. Using: "<<ignoreFile<<std::endl;
+
+	std::cout<<"Getting Word List from Resume...";
+	std::vector<std::string> resumeWords = resume.getWords();
+	std::cout<<"done." <<std::endl;
+	resume.closeFile();
+
+	std::cout<<"Getting Word List from Description...";
+	std::vector<std::string> descriptionWords = description.getWords();
+	std::cout<<"done." <<std::endl;
+	description.closeFile();
+
+	std::cout<<"Getting Word List from blacklist file...";
+	std::vector<std::string> blackListWords = wordsToIgnore.getWords();
+	std::cout<<"done."<<std::endl;
+	wordsToIgnore.closeFile();
+
+	std::cout<<"Setting up Word Counter for description words...";
+	wordCounter descriptionCounter(descriptionWords);
+	std::cout<<"done."<<std::endl;
+
+	std::cout<<"Setting up Word Counter for resume words...";
+	wordCounter resumeCounter(resumeWords);
+	std::cout<<"done."<<std::endl;
 
 	if(m == mode::MM){
 		std::cout<<outputFile;
 		output* outputter = setUpOutput(outputFile);
-		std::cout<<"Output file successfully set up..."<<std::endl;
-		std::vector<std::string> testWords1 = resume.getWords();
-		std::cout<<"Words successfully extracted from resume..."<<std::endl;
-		std::vector<std::string> testWords2 = description.getWords();
-		std::cout<<"Words successfully extracted from description..."<<std::endl;
-		wordCounter wordCountTest1(testWords1);
-		std::cout<<"Word Counter successfully set up for resume..."<<std::endl;
-		wordCounter wordCountTest2(testWords2);
-		std::cout<<"Word Counter successfully set up for description..."<<std::endl;
-		std::map<std::string, int> testMap1 = wordCountTest1.getCounts();
-		std::map<std::string, int> testMap2 = wordCountTest2.getCounts();
+		std::map<std::string, int> resumeMap = resumeCounter.getCounts();
+		std::map<std::string, int> descriptionMap = descriptionCounter.getCounts();
 		std::cout<<"Inverting resume values...";
-		invertValues(testMap1);
+		invertValues(resumeMap);
 		std::cout<<"Done!"<<std::endl;
-		for(auto i : testMap1){
-			std::vector<std::string> vec;
-			vec.push_back(i.first);
-			vec.push_back(std::to_string(i.second));
-			outputter->writeLine(vec);
-			std::cout<<"Entering: " << i.first << " " << i.second << std::endl;
-		}
-		for( auto j : testMap2){
-			std::vector<std::string> vec;
-			vec.push_back(j.first);
-			vec.push_back(std::to_string(j.second));
-			outputter->writeLine(vec);
-			std::cout<<"Entering: " << j.first << " " << j.second << std::endl;
-		}
-		unionMap uMap(testMap1, testMap2);
+		unionMap uMap(resumeMap, descriptionMap);
 		std::map<std::string, int> testUMap = uMap.getUnionMap();
 		for(auto k : testUMap){
+			if((std::find(blackListWords.begin(), blackListWords.end(), k.first)) != blackListWords.end())
+				continue;
 			std::cout<<"Union Map Element: " << k.first << " " << k.second << std::endl;
+			std::vector<std::string> v;
+			v.push_back(k.first);
+			v.push_back(std::to_string(k.second));
+			outputter->writeLine(v);
 		}
 		delete outputter;
 	}
 	else if(m == mode::LM){
-		wordCounter descriptionWordCounter(description.getWords());
-		learningMode learn(wordsToIgnore.getWords(), descriptionWordCounter.getCounts());
-		wordsToIgnore.closeFile();
+		learningMode learn(blackListWords, descriptionCounter.getCounts());
 		std::ofstream out(ignoreFile);
 		std::vector<std::string> v = learn.getFullWords();
 		for(auto i : v)
