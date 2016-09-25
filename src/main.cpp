@@ -108,12 +108,16 @@ int main(int argc, char** argv) {
 			case 'L':
 				m = mode::LM;
 				std::cout<<"Setting learning mode." <<std::endl;
+				std::cin.ignore(
+				std::numeric_limits<std::streamsize>::max(),'\n');
 				break;
 
 			case 'm':
 			case 'M':
 				m = mode::MM;
 				std::cout<<"Setting main mode."<<std::endl;
+				std::cin.ignore(
+				std::numeric_limits<std::streamsize>::max(),'\n');
 				break;
 			default :
 				std::cout<<"Please enter a valid choice: ";
@@ -173,11 +177,10 @@ int main(int argc, char** argv) {
 		wordCounter descriptionWordCounter(description.getWords());
 		learningMode learn(wordsToIgnore.getWords(), descriptionWordCounter.getCounts());
 		wordsToIgnore.closeFile();
-		CSVOutput out(ignoreFile);
+		std::ofstream out(ignoreFile);
 		std::vector<std::string> v = learn.getFullWords();
 		for(auto i : v)
-			out.writeLine(v);
-
+			out<<i<<'\n';
 	}
 	return 0;
 

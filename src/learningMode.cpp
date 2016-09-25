@@ -4,8 +4,6 @@
 
 learningMode::learningMode(std::vector<std::string> uVec, std::map<std::string, int> cMap) :
 	uselessWord(uVec), wordCountResult(cMap) { 
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-
 	for(auto it = cMap.begin(); it != cMap.end(); ++it){
 		if(!checkAgainstList(it->first)){
 			if(getResult("Would you like to add " + 
